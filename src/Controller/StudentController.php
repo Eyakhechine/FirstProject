@@ -99,4 +99,48 @@ return $this->redirectToRoute('lists');
         return $this->redirectToRoute('lists');
        
     }
+
+     /**
+     * @Route("/listfind", name="listfind")
+     */
+    public function listfind(): Response
+    {
+        $rep=$this->getDoctrine()->getRepository(Student::class);
+
+        $student =$rep-> ShowAllStudentsBynsc();
+
+        return $this->render('student/listfind.html.twig', [
+            'stud' => $student,
+        ]);
+    }
+
+    /**
+     * @Route("/listjoint/{id}", name="listjoint")
+     */
+    public function listjoint($id): Response
+    {
+        $rep=$this->getDoctrine()->getRepository(Student::class);
+
+        $student =$rep->ListStudentByClass($id);
+
+        return $this->render('student/listjoint.html.twig', [
+            'stud' => $student,
+        ]);
+    }
+
+    /**
+     * @Route("/liststudent", name="student")
+     */
+    public function listStudent(): Response
+    {
+        $rep=$this->getDoctrine()->getRepository(Student::class);
+
+        $student =$rep->findStudentByEmail();
+
+        return $this->render('student/liststudent.html.twig', [
+            'stud' => $student,
+        ]);
+    }
+
+
 }

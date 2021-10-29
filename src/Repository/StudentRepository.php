@@ -19,6 +19,40 @@ class StudentRepository extends ServiceEntityRepository
         parent::__construct($registry, Student::class);
     }
 
+    public function ShowAllStudentsBynsc()
+    {
+        return $this->createQueryBuilder('s')
+            ->where('s.nsc LIKE :nsc')
+            ->andWhere('s.email LIKE :email')
+            ->setParameter('nsc', '0%')
+            ->setParameter('email', 'test@gmail.com%')
+            ->getQuery()
+            ->getResult();
+            
+        ;
+    }
+
+public function ListStudentByClass($id){
+return $this->createQueryBuilder('s')
+->join('s.classroom','c')
+->addSelect('c')
+->where('c.id=:id')
+->setParameter('id',$id)
+->getQuery()
+->getResult();
+
+
+}
+
+
+public function findStudentByEmail(){
+    $entityManager=$this->getEntityManager();
+    $query=$entityManager->createQuery('select p FROM App\Entity\Student p ORDER BY p.email DESC' );
+    return $query->getResult();
+    
+        }
+
+
     // /**
     //  * @return Student[] Returns an array of Student objects
     //  */

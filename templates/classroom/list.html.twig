@@ -8,7 +8,7 @@
 <td> {{c.id}} </td>
 <td> {{c.name}}  </td>
 <td> <a href="{{path('update',{'id':c.id})}}" > edit</a>
-
+<td> <a href="{{path('listjoint',{'id':c.id})}}" > listjoin</a>
 <a href="{{path('delete',{'id':c.id})}}" > delete</a> </td>
 </tr>
 {% endfor %}
