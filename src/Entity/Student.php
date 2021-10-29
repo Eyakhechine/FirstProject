@@ -23,6 +23,11 @@ class Student
      */
     private $email;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Classroom::class, inversedBy="students")
+     */
+    private $classroom;
+
     
 
     public function getNsc(): ?string
@@ -45,6 +50,18 @@ class Student
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getClassroom(): ?classroom
+    {
+        return $this->classroom;
+    }
+
+    public function setClassroom(?classroom $classroom): self
+    {
+        $this->classroom = $classroom;
 
         return $this;
     }

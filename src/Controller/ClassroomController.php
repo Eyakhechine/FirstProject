@@ -4,12 +4,11 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Classroom ;
 use App\Repository\ClassroomRepository ;
-use App\Form\ClassroomType; 
-
+use App\Form\ClassroomType;
+use Symfony\Component\HttpFoundation\Request;
 class ClassroomController extends AbstractController
 {
     /**
@@ -21,9 +20,7 @@ class ClassroomController extends AbstractController
             'controller_name' => 'ClassroomController',
         ]);
     }
-
-    
-    /**
+     /**
      * @Route("/list", name="list")
      */
     public function list(): Response
@@ -40,50 +37,53 @@ class ClassroomController extends AbstractController
     /**
      * @Route("/add", name="add")
      */
-    public function add(request $request): Response
-    {   
-        $classroom = new Classroom(); 
+    public function add(Request $request): Response
+    {
+        $classroom=new classroom() ; // nouvelle instance 
         $form=$this->createForm(ClassroomType::class,$classroom);
         $form->handleRequest($request);
-        if($form->isSubmitted()){
-        $classroom= $form->getData();
-        $em=$this->getDoctrine()->getManager();
-        $em->persist($classroom);
-        $em->flush();
-        return $this->redirectToRoute('list');
+if ($form->isSubmitted())
+{
+$classroom=$form->getData();
+$em=$this->getDoctrine()->getManager();
+$em->persist($classroom);
+$em->flush();
+return $this->redirectToRoute('list');
+}
 
-        }
+
         return $this->render('classroom/add.html.twig', [
-            'formA' => $form ->createView(),
-            
+            'formA' => $form->createView(),
         ]);
+        
+
     }
 
     
-    /**
+     /**
      * @Route("/update/{id}", name="update")
      */
-    public function update(request $request,$id): Response
-    {   
-        
-        $rep=$this->getDoctrine()->getRepository(classroom::class);
-        $classroom=$rep->find($id);
+    public function update(Request $request, $id): Response
+    { $rep=$this->getDoctrine()->getRepository(classroom::class);
+        $classroom=$rep->find($id); // nouvelle instance 
         $form=$this->createForm(ClassroomType::class,$classroom);
         $form->handleRequest($request);
+if ($form->isSubmitted())
+{
+//$classroom=$form->getData();
+$em=$this->getDoctrine()->getManager();
+$em->flush();
+return $this->redirectToRoute('list');
+}
 
-        if($form->isSubmitted()){
-          
-            $em=$this->getDoctrine()->getManager();
-           
-            $em->flush();
-            return $this->redirectToRoute('list');
 
-        }
         return $this->render('classroom/update.html.twig', [
-            'formA' => $form ->createView(),
-            
+            'formA' => $form->createView(),
         ]);
+        
+
     }
+
     
     /**
      * @Route("/delete/{id}", name="delete")
@@ -93,7 +93,7 @@ class ClassroomController extends AbstractController
       $em=$this->getDoctrine()->getManager();
       $classroom=$rep->find($id);
       $em->remove($classroom);
-      $em->flush();
+      $em->flush(); //recuperation lkhedma yaani nabeetha ll database
 
         return $this->redirectToRoute('list');
        

@@ -6,6 +6,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Classroom;
 
 class StudentType extends AbstractType
 {
@@ -14,6 +16,16 @@ class StudentType extends AbstractType
         $builder
             ->add('nsc')
             ->add('email')
+            ->add('Classroom',EntityType::class
+            ,['expanded'=>false,
+              'multiple'=>false,
+              'choice_label'=>'name',
+              'class'=>Classroom::class,
+
+
+
+            ])
+
            ->add('save',SubmitType::class, ['label' =>'valider'])
           
 
